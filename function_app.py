@@ -1,26 +1,21 @@
 import azure.functions as func
 import logging
+import os
+from azure.storage.blob import BlobServiceClient, generate_blob_sas, AccountSasPermissions
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
+STORAGEACCOUNTURL=os.environ["STORAGEACCOUNTURL"]
+STORAGEACCOUNTKEY=os.environ["STORAGEACCOUNTKEY"]
+CONTAINERNAMESOURCE=os.environ["CONTAINERNAMESOURCE"]
+
 @app.route(route="integritytrigger")
-def integritytrigger(req: func.HttpRequest) -> func.HttpResponse:
+def integritytrigger(myblob: func.InputStream):
     logging.info('Python HTTP trigger function processed a request.')
-
-    name = req.params.get('name')
-    if not name:
-        try:
-            # test
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
-
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+    blob_service_client_instance = BlobServiceClient(
+    account_url=STORAGEACCOUNTURL, credential=STORAGEACCOUNTKEY)
+    BLOBNAME  =  myblob.name.split("/")[-1]
+    blob_client_instance = blob_service_client_instance.get_blob_client(
+    CONTAINERNAMESOURCE, BLOBNAME, snapshot=None) 
+    blob_data = blob_client_instance.download_blob()
+    data = blob_data.readall()
