@@ -12,7 +12,6 @@ def integritytrigger(req: func.HttpRequest) -> func.HttpResponse:
         try:
             # test
             req_body = req.get_json()
-            print(req_body)
         except ValueError:
             pass
         else:
