@@ -2,6 +2,7 @@ import azure.functions as func
 import logging
 import os
 from azure.storage.blob import BlobServiceClient, generate_blob_sas, AccountSasPermissions
+from integrity_test import integrity_test
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
@@ -19,3 +20,4 @@ def integritytrigger(myblob: func.InputStream):
     CONTAINERNAMESOURCE, BLOBNAME, snapshot=None) 
     blob_data = blob_client_instance.download_blob()
     data = blob_data.readall()
+    integrity_test(data)
