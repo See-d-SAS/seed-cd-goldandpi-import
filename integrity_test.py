@@ -1,6 +1,6 @@
 # import numpy as np
 import pandas as pd
-from isa4ai_library_pc.unitary_software_functions.convert_date_to_datetime.V0_0_0.convert_date_to_datetime import convert_date_to_datetime
+from convert_date_to_datetime import convert_date_to_datetime
 
 def integrity_test(data : pd.DataFrame) -> bool:
     """ Performs an integrity test on the data
