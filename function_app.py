@@ -21,4 +21,3 @@ def integritytrigger(myblob: func.InputStream):
     blob_data = blob_client_instance.download_blob()
     data = blob_data.readall()
     integrity_test(data)
-    #Test
