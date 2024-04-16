@@ -10,8 +10,7 @@ STORAGEACCOUNTURL=os.environ["STORAGEACCOUNTURL"]
 STORAGEACCOUNTKEY=os.environ["STORAGEACCOUNTKEY"]
 CONTAINERNAMESOURCE=os.environ["CONTAINERNAMESOURCE"]
 
-@app.route(route="integritytrigger")
-def integritytrigger(myblob: func.InputStream):
+def main(myblob: func.InputStream):
     logging.info('Python HTTP trigger function processed a request.')
     blob_service_client_instance = BlobServiceClient(
     account_url=STORAGEACCOUNTURL, credential=STORAGEACCOUNTKEY)
