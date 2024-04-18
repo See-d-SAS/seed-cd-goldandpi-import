@@ -6,7 +6,7 @@
       "type": "blobTrigger",
       "direction": "in",
       "path": "incoming-files/{name}",
-      "connection": "seedgoldandpista_STORAGE"
+      "connection": "storageblob_r653p"
     }
   ]
 }
